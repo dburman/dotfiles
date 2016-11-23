@@ -20,40 +20,44 @@ set ignorecase         " Ignore case in searches...
 set hlsearch           " Highlight search results
 set showmatch          " Highlight matching character briefly
 
-set nolist 
+set nolist
 set noeb vb t_vb=
 
+syntax enable
+
+nmap ts :%s/\s\+$//<CR>
 nmap tn :tabnew<space>
-nmap <D-k> :tabn<CR> 
+nmap <D-k> :tabn<CR>
 nmap <D-j> :tabp<CR>
 
 
 ":%s/\s\+$// "remove trailing spaces
 
+set background=dark
 "set guifont = lucinda_console
 "set guifont = Menlo
 "colorscheme evening
-"colorscheme solarized 
-colorscheme phylite 
+"colorscheme solarized
+colorscheme phylite
 
-syntax enable
-set background=dark
 "colorscheme solarized
 
 
 
 call plug#begin('~/.vim/plugged')
+Plug 'kballard/vim-swift'
+Plug 'rust-lang/rust.vim'
 Plug 'tpope/vim-sensible'
 Plug 'altercation/vim-colors-solarized'
 Plug 'bling/vim-airline'
-Plug 'scrooloose/syntastic' "{{{
-  set statusline+=%#warningmsg#
-  set statusline+=%{SyntasticStatuslineFlag()}
-  set statusline+=%*
-  let g:syntastic_always_populate_loc_list = 1
-  let g:syntastic_auto_loc_list = 1
-  let g:syntastic_check_on_open = 1
-  let g:syntastic_check_on_wq = 0
+"Plug 'scrooloose/syntastic' "{{{
+"  set statusline+=%#warningmsg#
+"  set statusline+=%{SyntasticStatuslineFlag()}
+"  set statusline+=%*
+"  let g:syntastic_always_populate_loc_list = 1
+"  let g:syntastic_auto_loc_list = 1
+"  let g:syntastic_check_on_open = 1
+"  let g:syntastic_check_on_wq = 0
 "}}}
 Plug 'tpope/vim-fugitive' "{{{
   nnoremap <silent> <leader>gs :Gstatus<CR>

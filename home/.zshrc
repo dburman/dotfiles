@@ -1,17 +1,11 @@
-#THIS MUST BE AT THE END OF THE FILE FOR GVM TO WORK!!!
+source ~/.zsh/checks.zsh
+source ~/.zsh/setopt.zsh
+source ~/.zsh/history.zsh
 
 autoload -Uz promptinit; promptinit
 prompt adam1
 
-
-unsetopt beep
-setopt histignorealldups sharehistory 
-
 bindkey -v
-
-HISTSIZE=4000
-SAVEHIST=1000
-HISTFILE=~/.zsh_history
 
 autoload -Uz compinit; compinit
 
@@ -33,20 +27,9 @@ zstyle ':completion:*' verbose true
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 
-
-
-
-
 zstyle ':completion:*:descriptions' format '%U%B%d%b%u'
 
 zstyle ':completion:*:warnings' format '%BSorry, no matches for: %d%b'
-
-#setopt correctall
-
-setopt hist_ignore_all_dups
-setopt hist_ignore_space
-setopt autocd
-setopt extendedglob
 
 #export COLORTERM=yes
 
@@ -72,14 +55,13 @@ if type -p colorgcc &> /dev/null ; then alias gcc="colorgcc" ; fi
 if type -p colortail &> /dev/null ; then alias tail="colortail" ; fi
 
 # Bind keys
- bindkey "\e[H"  beginning-of-line
- bindkey "\e[F"  end-of-line
+bindkey "\e[H"  beginning-of-line
+bindkey "\e[F"  end-of-line
 
- set -o vi
- autoload -U colors; colors
+set -o vi
+autoload -U colors; colors
 
  # SSH Completion
-
 zstyle ':completion:*:scp:*' tag-order \
  files users 'hosts:-host hosts:-domain:domain hosts:-ipaddr"IP\ Address *'
 
@@ -92,11 +74,9 @@ zstyle ':completion:*:ssh:*' tag-order \
 zstyle ':completion:*:ssh:*' group-order \
  hosts-domain hosts-host users hosts-ipaddr
 
-
-
 export PATH=$HOME/bin:/usr/local/bin:/usr/local/sbin:$PATH
-export PATH=$PATH:"/Applications/microchip/xc32/v1.31/bin"
-
+#export PATH=$PATH:"/Applications/microchip/xc32/v1.31/bin"
+export PATH="$HOME/.cargo/bin:$PATH"
 
 
 [[ -s "/Users/dburman/.gvm/bin/gvm-init.sh" ]] && source "/Users/dburman/.gvm/bin/gvm-init.sh"
