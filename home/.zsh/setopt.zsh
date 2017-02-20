@@ -49,5 +49,3 @@ setopt multios # perform implicit tees or cats when multiple redirections are at
 #setopt hist_ignore_space
 #setopt autocd
 #setopt extendedglob
-
-
