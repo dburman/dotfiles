@@ -3,7 +3,7 @@ ADOTDIR=$HOME/.antigen
 # Download and install antigen if it doesn't exist
 if [ ! -f "$ADOTDIR/antigen/antigen.zsh" ]; then
   echo "zsh antigen not installed - cloning..."
-  mkdir -p "$ADOTDIR" git clone https://github.com/zsh-users/antigen "$ADOTDIR/antigen"
+  mkdir -p "$ADOTDIR" && git clone https://github.com/zsh-users/antigen "$ADOTDIR/antigen"
 fi
 
 # Install antigen plugins
