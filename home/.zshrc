@@ -16,8 +16,12 @@ fi
 if [[ $(uname) = 'Darwin' ]]; then
  export EDITOR=/usr/local/bin/mvim
 else
- export EDITOR=/usr/bin/nvim
-fi 
+ if [[ -x `which nvim` ]]; then
+   export EDITOR=/usr/bin/nvim
+ else
+   export EDITOR=/usr/bin/vi
+ fi
+fi
 
 # Bind keys
 bindkey -v
