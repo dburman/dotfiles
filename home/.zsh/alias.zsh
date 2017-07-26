@@ -4,7 +4,7 @@ alias ping="ping -c3"
 
 if [[ -x `which htop` ]]; then
  alias top="htop"
-fi 
+fi
 
 #alias cgrep="grep --color=auto"
 alias :q="exit"
@@ -18,28 +18,34 @@ if [[ $(uname) = 'Darwin' ]]; then
 else
   if [[ -x `which vim` ]]; then
     alias vi="vim"
-  else 
+  else
     if [[ -x `which nvim` ]]; then
       alias vi="nvim"
     fi
-  fi 
+  fi
 
   if [[ $(uname) = 'Linux' ]]; then
     if [[ -x `which apt` ]]; then
-      alias updateos="sudo apt update && sudo apt upgrade && sudo apt autoremove" 
+      alias updateos="sudo apt update && sudo apt upgrade && sudo apt autoremove"
     fi
   elif [[ $(uname) = 'FreeBSD' ]]; then
     alias updateos="echo 'freebsd not supported'"
   fi
 fi
 
-if type -p colordiff &> /dev/null ; then 
-  alias diff="colordiff" ; 
+if type -p colordiff &> /dev/null ; then
+  alias diff="colordiff" ;
 else
   if [[ -x `which vimdiff` ]]; then
-    alias diff="vimdiff" ; 
+    alias diff="vimdiff" ;
   fi
 fi
 if type -p colorgcc &> /dev/null ; then alias gcc="colorgcc" ; fi
 if type -p colortail &> /dev/null ; then alias tail="colortail" ; fi
+
+
+if [[ -x `which git` ]]; then
+ alias gs="git status"
+ alias gp="git pull && git submodule update --init"
+fi
 
