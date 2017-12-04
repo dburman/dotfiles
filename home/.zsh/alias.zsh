@@ -20,7 +20,7 @@ elif [[ $(uname) = 'Linux' ]]; then
   if [[ -x `which vim` ]]; then alias vi="vim" ; elif [[ -x `which nvim` ]]; then alias vi="nvim" ;fi
 elif [[ $(uname) = 'FreeBSD' ]]; then
   NB_CORES=$(sysctl hw.ncpu | awk '{print $2}')
-  alias make="make -j$((NB_CORES+1)) -l${NB_CORES}"
+  alias make="make -j$((NB_CORES+1))"
   alias updateos="echo 'freebsd not supported'"
   if [[ -x `which vim` ]]; then alias vi="vim" ; elif [[ -x `which nvim` ]]; then alias vi="nvim" ;fi
 fi
