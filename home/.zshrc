@@ -32,6 +32,7 @@ set -o vi
 autoload -U colors; colors
 
 source ~/.zsh/alias.zsh
+source ~/.zsh/secret.zsh
 #[[ -s "/Users/dburman/.gvm/bin/gvm-init.sh" ]] && source "/Users/dburman/.gvm/bin/gvm-init.sh"
 source ~/.zsh/path.zsh
 source ~/.zsh/prune-paths.zsh
