@@ -6,7 +6,7 @@ alias ping="ping -c3"
 alias :q="exit"
 alias :wq="exit"
 
-if [[ -x `which keychain` ]]; then eval $(keychain --eval id_rsa);fi
+if [[ -x `which keychain` ]]; then eval $(keychain --eval id_ed25519);fi
 
 if [[ -x `which htop` ]]; then alias top="htop" ;fi
 
