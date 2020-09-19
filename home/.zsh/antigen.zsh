@@ -26,6 +26,6 @@ antigen bundles <<EOBUNDLES
     zsh-users/zsh-syntax-highlighting
 EOBUNDLES
 
-antigen apply
 antigen theme ~/.zsh themes/doitchbig
+antigen apply
 
