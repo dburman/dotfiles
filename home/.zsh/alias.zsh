@@ -8,7 +8,7 @@ alias :wq="exit"
 
 if [[ -x `which keychain` ]]; then eval $(keychain --eval id_ed25519);fi
 
-if [[ -x `which htop` ]]; then alias top="htop" ;fi
+if [[ -x `which glances` ]]; then alias top="glances"; elif [[ -x `which htop` ]]; then alias top="htop" ;fi
 
 if [[ $(uname) = 'Darwin' ]]; then
   NB_CORES=$(sysctl hw.ncpu | awk '{print $2}')
