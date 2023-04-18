@@ -1,6 +1,7 @@
 alias df="df -h"
 alias ping="ping -c3"
 alias docker-cup="docker-compose pull && docker-compose up --force-recreate --build -d && docker image prune -f"
+alias lazydocker="docker run --rm -it -v /var/run/docker.sock:/var/run/docker.sock -v ~/lazydocker:/.config/jesseduffield/lazydocker lazyteam/lazydocker"
 
 #alias cgrep="grep --color=auto"
 alias :q="exit"
@@ -18,12 +19,18 @@ if [[ $(uname) = 'Darwin' ]]; then
 elif [[ $(uname) = 'Linux' ]]; then
   NB_CORES=$(grep -c '^processor' /proc/cpuinfo)
   alias make="make -j$((NB_CORES+1)) -l${NB_CORES}"
-  if [[ -x `which apt` ]]; then alias updateos="sudo apt update && sudo apt upgrade && sudo apt autoremove" ;fi
+  if [[ -x `which apt` ]];
+    if [[ -x `which flatpak` ]]; then
+      alias updateos="sudo apt update && sudo apt upgrade && sudo apt autoremove && flatpak update";
+    else
+      alias updateos="sudo apt update && sudo apt upgrade && sudo apt autoremove";
+    fi
+  fi
   if [[ -x `which vim` ]]; then alias vi="vim" ; elif [[ -x `which nvim` ]]; then alias vi="nvim" ;fi
 elif [[ $(uname) = 'FreeBSD' ]]; then
   NB_CORES=$(sysctl hw.ncpu | awk '{print $2}')
   alias make="make -j$((NB_CORES+1))"
-  alias updateos="echo 'freebsd not supported'"
+  alias updateos="sudo pkg upgrade"
   if [[ -x `which vim` ]]; then alias vi="vim" ; elif [[ -x `which nvim` ]]; then alias vi="nvim" ;fi
 fi
 
