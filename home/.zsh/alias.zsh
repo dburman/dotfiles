@@ -2,12 +2,10 @@ alias df="df -h"
 alias ping="ping -c3"
 alias docker-cup="docker-compose pull && docker-compose up --force-recreate --build -d && docker image prune -f"
 alias lazydocker="docker run --rm -it -v /var/run/docker.sock:/var/run/docker.sock -v ~/lazydocker:/.config/jesseduffield/lazydocker lazyteam/lazydocker"
-
 alias :q="exit"
 alias :wq="exit"
 
 if [[ -x `which keychain` ]]; then eval $(keychain --eval id_ed25519);fi
-
 if [[ -x `which glances` ]]; then alias top="glances"; elif [[ -x `which htop` ]]; then alias top="htop" ;fi
 
 if [[ $(uname) = 'Darwin' ]]; then
@@ -60,6 +58,3 @@ fi
 
 #functions....
 transfer(){ if [ $# -eq 0 ];then echo "No arguments specified.\nUsage:\n transfer <file|directory>\n ... | transfer <file_name>">&2;return 1;fi;if tty -s;then file="$1";file_name=$(basename "$file");if [ ! -e "$file" ];then echo "$file: No such file or directory">&2;return 1;fi;if [ -d "$file" ];then file_name="$file_name.zip" ,;(cd "$file"&&zip -r -q - .)|curl --progress-bar --upload-file "-" "https://xfer.muteink.com/$file_name"|tee /dev/null,;else cat "$file"|curl --progress-bar --upload-file "-" "https://xfer.muteink.com/$file_name"|tee /dev/null;fi;else file_name=$1;curl --progress-bar --upload-file "-" "https://xfer.muteink.com/$file_name"|tee /dev/null;fi;}
-
-
-

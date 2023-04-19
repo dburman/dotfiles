@@ -3,6 +3,9 @@ dircolors_exe=""
 if [[ "$(uname -s)" == "Darwin" ]]; then
   gls --color -d . &>/dev/null 2>&1 && alias ls='gls -FqN --color=auto' || alias ls='ls -GF'
   gdircolors &> /dev/null 2>&1 && dircolors_exe=gdircolors
+elif [[ $(uname) = 'FreeBSD' ]]; then
+  ls --color -d . &>/dev/null 2>&1 && alias ls='ls -Fq --color=auto' || alias ls='ls -GF'
+  dircolors &> /dev/null 2>&1 && dircolors_exe=dircolors
 else
   ls --color -d . &>/dev/null 2>&1 && alias ls='ls -FqN --color=auto' || alias ls='ls -GF'
   dircolors &> /dev/null 2>&1 && dircolors_exe=dircolors
