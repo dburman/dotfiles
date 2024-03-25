@@ -1,7 +1,8 @@
 alias df="df -h"
 alias ping="ping -c3"
-alias docker-cup="docker-compose pull && docker-compose up --force-recreate --build -d && docker image prune -f"
-alias lazydocker="docker run --rm -it -v /var/run/docker.sock:/var/run/docker.sock -v ~/lazydocker:/.config/jesseduffield/lazydocker lazyteam/lazydocker"
+#alias docker-cup="docker-compose pull && docker-compose up --force-recreate --build -d && docker image prune -f"
+alias docker-cup="docker compose pull && docker compose up --force-recreate --build -d && docker image prune -f"
+#alias lazydocker="docker run --rm -it -v /var/run/docker.sock:/var/run/docker.sock -v ~/lazydocker:/.config/jesseduffield/lazydocker lazyteam/lazydocker"
 alias :q="exit"
 alias :wq="exit"
 
@@ -24,6 +25,10 @@ elif [[ $(uname) = 'Linux' ]]; then
       alias updateos="sudo apt update && sudo apt upgrade && sudo apt autoremove && flatpak update"
     else
       alias updateos="sudo apt update && sudo apt upgrade && sudo apt autoremove"
+    fi
+  else
+    if [[ -x `which apk` ]]; then
+      alias updateos="sudo apk update && sudo apk upgrade"
     fi
   fi
   if [[ -x `which vim` ]]; then alias vi="vim" ; elif [[ -x `which nvim` ]]; then alias vi="nvim" ;fi

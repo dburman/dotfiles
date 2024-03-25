@@ -21,6 +21,7 @@ antigen use oh-my-zsh
 #EOBUNDLES
 
 antigen bundles <<EOBUNDLES
+    git
     colored-man-pages
     command-not-found
     zsh-users/zsh-syntax-highlighting

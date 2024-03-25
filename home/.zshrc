@@ -37,3 +37,5 @@ source ~/.zsh/secret.zsh
 source ~/.zsh/path.zsh
 source ~/.zsh/prune-paths.zsh
 
+
+if [[ -x `which neofetch` ]]; then neofetch;fi
