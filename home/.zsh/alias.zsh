@@ -13,7 +13,7 @@ if [[ $(uname) = 'Darwin' ]]; then
   NB_CORES=$(sysctl hw.ncpu | awk '{print $2}')
   alias make="make -j$((NB_CORES+1)) -l${NB_CORES}"
   if [[ -x `which brew` ]]; then alias updateos="brew update && brew upgrade && brew cleanup && mas upgrade && softwareupdate -i -a" ;fi
-  alias vi="vim"
+  alias vi="nvim"
 
   #functions....
   replace(){ if [ $# -eq 0 ]; then echo "\nUsage:\n replace <findtext> <replacetext>\n"; return 1; else echo "\n-----------\n"; fi; rg "$1" . && echo "\n-----------\n"  && rg -l "$1" . | xargs sed -i '' "s/$1/$2/g" && rg "$2" . && echo "\n-----------\n";}
