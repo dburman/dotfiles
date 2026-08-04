@@ -51,6 +51,20 @@ elif [[ $(uname) = 'FreeBSD' ]]; then
   replace(){ if [ $# -eq 0 ]; then echo "\nUsage:\n replace <findtext> <replacetext>\n"; return 1; else echo "\n-----------\n"; fi; rg "$1" . && echo "\n-----------\n"  && rg -l "$1" . | xargs sed -i '' "s/$1/$2/g" && rg "$2" . && echo "\n-----------\n";}
 fi
 
+# sd (Rust) replaces `sed -i` and behaves identically everywhere, so this single
+# definition supersedes the three above -- which differ only because BSD/macOS
+# `sed -i` needs a backup-suffix argument and GNU does not. The sed versions stay
+# as the fallback for machines without sd.
+#
+# Note this checks for 2 args, not 0 like the fallbacks: called with a single
+# argument the old form ran s/$1//g and silently deleted every match.
+if (( $+commands[sd] )); then
+  replace(){
+    if [ $# -lt 2 ]; then echo "\nUsage:\n replace <findtext> <replacetext>\n"; return 1; else echo "\n-----------\n"; fi
+    rg "$1" . && echo "\n-----------\n" && rg -l "$1" . | xargs sd "$1" "$2" && rg "$2" . && echo "\n-----------\n"
+  }
+fi
+
 if type -p colordiff &> /dev/null ; then
   alias diff="colordiff" ;
 else

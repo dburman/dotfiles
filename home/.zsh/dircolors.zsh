@@ -11,6 +11,17 @@ else
   dircolors &> /dev/null 2>&1 && dircolors_exe=dircolors
 fi
 
+# eza (Rust) supersedes the per-OS ls aliases above: it behaves identically on
+# macOS, Alpine, Ubuntu and PopOS, so none of the GNU/BSD/busybox flag juggling
+# applies to it. --classify=auto is eza's -F, and =auto (like --color=auto)
+# suppresses the indicators when output is piped rather than shown in a terminal.
+# eza reads LS_COLORS, so the dircolors setup below still feeds it.
+# oh-my-zsh's ll/la/l/lsa chain through this alias and their -lh/-lAh/-lah all
+# work under eza, so they need no changes.
+if (( $+commands[eza] )); then
+  alias ls='eza --classify=auto --color=auto'
+fi
+
 # Find config path, preferring ~/.dir_colors
 dircolors_path=""
 [ -f /etc/DIR_COLORS ] && dircolors_path="/etc/DIR_COLORS"
