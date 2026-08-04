@@ -2,6 +2,12 @@ alias df="df -h"
 alias ping="ping -c3"
 #alias docker-cup="docker-compose pull && docker-compose up --force-recreate --build -d && docker image prune -f"
 alias docker-cup="docker compose pull && docker compose up --force-recreate --build -d && docker image prune -f"
+
+# Was living only in this machine's ~/.zshrc and would have been lost on the
+# next sync2home.sh. Guarded so machines with real docker are unaffected.
+if (( ! $+commands[docker] )) && (( $+commands[podman] )); then
+  alias docker=podman
+fi
 #alias lazydocker="docker run --rm -it -v /var/run/docker.sock:/var/run/docker.sock -v ~/lazydocker:/.config/jesseduffield/lazydocker lazyteam/lazydocker"
 alias :q="exit"
 alias :wq="exit"
@@ -31,7 +37,7 @@ elif [[ $(uname) = 'Linux' ]]; then
       alias updateos="sudo apk update && sudo apk upgrade"
     fi
   fi
-  if [[ -x `which vim` ]]; then alias vi="vim" ; elif [[ -x `which nvim` ]]; then alias vi="nvim" ;fi
+  if (( $+commands[nvim] )); then alias vi="nvim" ; elif (( $+commands[vim] )); then alias vi="vim" ;fi
 
   #functions....
   replace(){ if [ $# -eq 0 ]; then echo "\nUsage:\n replace <findtext> <replacetext>\n"; return 1; else echo "\n-----------\n"; fi; rg "$1" . && echo "\n-----------\n"  && rg -l "$1" . | xargs sed -i  "s/$1/$2/g" && rg "$2" . && echo "\n-----------\n";}
@@ -39,7 +45,7 @@ elif [[ $(uname) = 'FreeBSD' ]]; then
   NB_CORES=$(sysctl hw.ncpu | awk '{print $2}')
   alias make="make -j$((NB_CORES+1))"
   alias updateos="sudo pkg upgrade"
-  if [[ -x `which vim` ]]; then alias vi="vim" ; elif [[ -x `which nvim` ]]; then alias vi="nvim" ;fi
+  if (( $+commands[nvim] )); then alias vi="nvim" ; elif (( $+commands[vim] )); then alias vi="vim" ;fi
 
   #functions....
   replace(){ if [ $# -eq 0 ]; then echo "\nUsage:\n replace <findtext> <replacetext>\n"; return 1; else echo "\n-----------\n"; fi; rg "$1" . && echo "\n-----------\n"  && rg -l "$1" . | xargs sed -i '' "s/$1/$2/g" && rg "$2" . && echo "\n-----------\n";}

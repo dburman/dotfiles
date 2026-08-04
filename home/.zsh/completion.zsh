@@ -1,4 +1,7 @@
-autoload -Uz compinit; compinit
+# Only run compinit if nothing else already did. oh-my-zsh runs its own
+# (oh-my-zsh.sh:127); zsh sets $_comps when compinit has completed, so this
+# skips the duplicate. Still runs normally when the prompt framework is off.
+(( ${+_comps} )) || { autoload -Uz compinit; compinit }
 
 zstyle ':completion:*' auto-description 'specify: %d'
 zstyle ':completion:*' completer _expand _complete _correct _approximate

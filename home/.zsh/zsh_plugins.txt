@@ -1,0 +1,20 @@
+# Plugin manifest for antidote. One bundle per line, order matters.
+# Regenerate the compiled form with:  antidote bundle < zsh_plugins.txt > zsh_plugins.zsh
+# (antidote.zsh does this automatically when this file is newer.)
+
+# All of oh-my-zsh's lib, matching what `antigen use oh-my-zsh` used to load.
+# Importing only lib/git.zsh (enough for the theme's git_prompt_info) silently
+# dropped ~20 aliases that live elsewhere in lib: ll/la/l and .. ... 1-9 md rd
+# from directories.zsh, colored grep/egrep/fgrep from grep.zsh, and the
+# omz_history wrapper from history.zsh.
+# Must precede plugins/git, which uses git_current_branch from lib/git.zsh.
+ohmyzsh/ohmyzsh path:lib
+
+# The 197 git aliases (gst, gco, gd, gcm, ...) and 18 helper functions.
+ohmyzsh/ohmyzsh path:plugins/git
+
+ohmyzsh/ohmyzsh path:plugins/colored-man-pages
+ohmyzsh/ohmyzsh path:plugins/command-not-found
+
+# Must stay last: it wraps every widget defined before it.
+zsh-users/zsh-syntax-highlighting
