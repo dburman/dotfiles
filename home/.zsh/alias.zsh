@@ -12,7 +12,7 @@ fi
 alias :q="exit"
 alias :wq="exit"
 
-if [[ -x `which keychain` ]]; then eval $(keychain --eval id_ed25519);fi
+if [[ -x `which keychain` ]]; then eval $(keychain --eval --quiet id_ed25519);fi
 if [[ -x `which glances` ]]; then alias top="glances"; elif [[ -x `which htop` ]]; then alias top="htop" ;fi
 
 if [[ $(uname) = 'Darwin' ]]; then
@@ -26,17 +26,25 @@ if [[ $(uname) = 'Darwin' ]]; then
 elif [[ $(uname) = 'Linux' ]]; then
   NB_CORES=$(grep -c '^processor' /proc/cpuinfo)
   alias make="make -j$((NB_CORES+1)) -l${NB_CORES}"
-  if [[ -x `which apt` ]]; then
-    if [[ -x `which flatpak` ]]; then
-      alias updateos="sudo apt update && sudo apt upgrade && sudo apt autoremove && flatpak update"
+  # Ubuntu/PopOS (apt), Arch (pacman), Alpine (apk).
+  # On Arch, prefer an AUR helper if installed: paru/yay run `pacman -Syu` and
+  # then update AUR packages too. They call sudo themselves, so no sudo prefix.
+  if (( $+commands[apt] )); then
+    _updateos="sudo apt update && sudo apt upgrade && sudo apt autoremove"
+  elif (( $+commands[pacman] )); then
+    if (( $+commands[paru] )); then
+      _updateos="paru -Syu"
+    elif (( $+commands[yay] )); then
+      _updateos="yay -Syu"
     else
-      alias updateos="sudo apt update && sudo apt upgrade && sudo apt autoremove"
+      _updateos="sudo pacman -Syu"
     fi
-  else
-    if [[ -x `which apk` ]]; then
-      alias updateos="sudo apk update && sudo apk upgrade"
-    fi
+  elif (( $+commands[apk] )); then
+    _updateos="sudo apk update && sudo apk upgrade"
   fi
+  (( $+commands[flatpak] )) && [[ -n $_updateos ]] && _updateos+=" && flatpak update"
+  [[ -n $_updateos ]] && alias updateos=$_updateos
+  unset _updateos
   if (( $+commands[nvim] )); then alias vi="nvim" ; elif (( $+commands[vim] )); then alias vi="vim" ;fi
 
   #functions....

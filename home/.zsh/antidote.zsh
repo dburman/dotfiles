@@ -33,10 +33,9 @@ export ZSH="$(antidote home)/github.com/ohmyzsh/ohmyzsh"
 
 source ${zsh_plugins}.zsh
 
-# $fg_bold / $fg_no_bold used by the theme below. Previously this came for free
-# from oh-my-zsh's lib/theme-and-appearance.zsh, which `antigen use oh-my-zsh`
-# pulled in; we only import lib/git.zsh now, so initialize colors explicitly.
 autoload -Uz colors && colors
 
-# Local theme (not a bundle) - source directly.
-source ${HOME}/.zsh/themes/doitchbig.zsh-theme
+# Prompt: powerlevel10k is loaded as a bundle above; this applies its config.
+# The previous hand-rolled theme is kept at themes/doitchbig.zsh-theme - to go
+# back, remove romkatv/powerlevel10k from zsh_plugins.txt and source it here.
+[[ -r $POWERLEVEL9K_CONFIG_FILE ]] && source $POWERLEVEL9K_CONFIG_FILE

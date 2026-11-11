@@ -18,8 +18,28 @@ fi
 # eza reads LS_COLORS, so the dircolors setup below still feeds it.
 # oh-my-zsh's ll/la/l/lsa chain through this alias and their -lh/-lAh/-lah all
 # work under eza, so they need no changes.
+#
+# A function, not an alias, to work around an eza bug: when stdin is not a
+# terminal, eza reads the file list from stdin even without --stdin. With empty
+# stdin it prints NOTHING and exits 0, so `ls` silently showed nothing from nvim's
+# :!ls, `ssh host ls`, cron, or inside `... | while read`. When stdin isn't a tty
+# and no argument names an existing path, pass `.` explicitly so eza lists the
+# current directory instead of waiting on stdin.
 if (( $+commands[eza] )); then
-  alias ls='eza --classify=auto --color=auto'
+  unalias ls 2>/dev/null
+  # `function ls` rather than `ls()`: zsh would alias-expand `ls()` at parse time,
+  # since the per-OS branches above already defined an ls alias.
+  function ls {
+    if [[ ! -t 0 ]]; then
+      local a
+      for a in "$@"; do
+        [[ $a != -* && -e $a ]] && { eza --classify=auto --color=auto "$@"; return; }
+      done
+      eza --classify=auto --color=auto "$@" .
+    else
+      eza --classify=auto --color=auto "$@"
+    fi
+  }
 fi
 
 # Find config path, preferring ~/.dir_colors

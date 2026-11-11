@@ -129,8 +129,9 @@ Each is independent and low-risk.
   (*"fix(git)!: standardize `git pull --rebase` aliases"*, a deliberate breaking change). Your
   antigen copy was pinned to Aug 2025 and never saw it. Mapping: `gup`→`gpr`, `gupv`→`gprv`,
   `gupa`→`gpra`, `gupav`→`gprav`, `gupom`→`gprom`, `gupomi`→`gpromi`.
-- **`~/.antigen` is orphaned**, 18 MB, nothing references it. Left in place deliberately as the
-  rollback path for the antidote migration. Delete once you're satisfied things work.
+- ~~**`~/.antigen` is orphaned**~~ — **DONE.** Removed `~/.antigen`, `~/.zsh/antigen.zsh` (+ `.zwc`)
+  and the generated `doitchbig.zsh-theme.antigen-compat`. The old antigen config is recoverable with
+  `git show 831397b^:home/.zsh/antigen.zsh`.
 - **Unverified: does the git branch actually show in your prompt?** oh-my-zsh wraps
   `git_prompt_info` in `lib/async_prompt.zsh`, so it reads from `_OMZ_ASYNC_OUTPUT`, populated by a
   background job on `precmd`. That never fires in a scripted shell, so every harness I tried

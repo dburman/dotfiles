@@ -1,4 +1,23 @@
+# Anything that prints to the console must run ABOVE the instant-prompt block,
+# otherwise p10k warns about output during initialization.
+# neofetch was archived upstream in 2024; prefer fastfetch, fall back if absent.
+if [[ -o interactive ]]; then
+  if (( $+commands[fastfetch] )); then
+    fastfetch
+  elif (( $+commands[neofetch] )); then
+    neofetch
+  fi
+fi
 
+# powerlevel10k instant prompt: draws the prompt immediately from a cache while
+# the rest of this file loads. Must stay near the top of .zshrc.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+# Keep the p10k config inside ~/.zsh so sync2git.sh / sync2home.sh carry it
+# with everything else. `p10k configure` writes to this path.
+export POWERLEVEL9K_CONFIG_FILE=~/.zsh/p10k.zsh
 source ~/.zsh/checks.zsh
 source ~/.zsh/setopt.zsh
 source ~/.zsh/history.zsh
@@ -49,10 +68,3 @@ source ~/.zsh/secret.zsh
 source ~/.zsh/path.zsh
 source ~/.zsh/prune-paths.zsh
 
-
-# neofetch was archived upstream in 2024; prefer fastfetch, fall back if absent.
-if (( $+commands[fastfetch] )); then
-  fastfetch
-elif (( $+commands[neofetch] )); then
-  neofetch
-fi
